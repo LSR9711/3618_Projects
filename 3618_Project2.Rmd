@@ -1,0 +1,44 @@
+---
+title: "3618_Project2"
+author: "Li.7721 Jin.977"
+date: "2019/11/19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+
+R code for creating an amortization table
+
+```{R}
+n <- 10
+L <- 200000
+i <- 0.03
+monthly_rate <- (1+i)^(1/4)-1
+discount_rate <- 1/(monthly_rate+1)
+peroid <- n*4
+payment_size <- L/(1-discount_rate^peroid)*monthly_rate
+times=1
+interest_paid <- monthly_rate*L
+principal_repaid <- payment_size - interest_paid
+outstanding_balance <- L - principal_repaid
+amortization_table <- matrix (c(0,0,L,interest_paid,principal_repaid,outstanding_balance),ncol=3,nrow=2,byrow=TRUE)
+
+while (L > 0)
+{
+  interest_paid <- monthly_rate*L
+  principal_repaid <- payment_size - interest_paid
+  outstanding_balance <- L - principal_repaid
+  L <- L-principal_repaid
+  amortization_table <- rbind(amortization_table,cbind(interest_paid,principal_repaid,outstanding_balance))
+  times<-times+1
+}
+
+amortization_table
+```
