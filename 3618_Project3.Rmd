@@ -1,0 +1,44 @@
+```{R}
+n <- 10
+k <- n
+C <- 10000
+r <- 0.06
+i <- 0.04
+j <- (1+i)^(1/2)-1
+v <- 1/(1+r)
+# put in variables calculate semiannually rate and discount rate, coupy the value of n to k
+Coupon_size <- C*r
+Payment_size <- Coupon_size
+Bond_price <- C*(1+(r-j)*(1-v^n)/j)
+n <- n-1
+Outstanding_balance <- C*(1+(r-j)*(1-v^n)/j)
+Interest_due <- Outstanding_balance*j
+Principle_repaid <- Coupon_size-Interest_due
+# calculate Bond price and first payment 
+Bond_amortiezation_table <- matrix(c(Bond_price,0,0,0,Outstanding_balance,Payment_size,Interest_due,Principle_repaid),ncol=4,nrow=2,byrow=TRUE)
+# Create 2 raw 4 column matrix
+
+while (n > 0)
+{
+  n <- n-1
+  # Start from n-2 period 
+  Outstanding_balance <- C*(1+(r-j)*(1-v^n)/j)
+  Coupon_size <- C*r
+  Interest_due <- Outstanding_balance*j
+  Principle_repaid <- Coupon_size-Interest_due
+  if (n != 0)
+  {Payment_size <- Coupon_size}
+  else 
+ #   {Payment_size <- Coupon_size+C
+   Interest_due <- Outstanding_balance*j
+   Outstanding_balance <- Outstanding_balance - C
+  }
+   # Determine whether it is the last peroid of payment 
+  Bond_amortiezation_table <- rbind(Bond_amortiezation_table,cbind(Outstanding_balance,Payment_size,Interest_due,Principle_repaid))
+  # Add new vactor into the matrix
+}
+# Loop the calculation from n-2 period to 0 period and add them into the matrix
+rownames(Bond_amortiezation_table) <- 0:k
+# Set Row index from 0 to k(original n)
+Bond_amortiezation_table
+```
