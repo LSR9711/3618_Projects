@@ -6,7 +6,7 @@ r <- 0.06
 i <- 0.04
 j <- (1+i)^(1/2)-1
 v <- 1/(1+r)
-# put in variables calculate semiannually rate and discount rate, coupy the value of n to k
+# put in variables calculate semiannually rate and discount rate, copy the value of n to k
 Coupon_size <- C*r
 Payment_size <- Coupon_size
 Bond_price <- C*(1+(r-j)*(1-v^n)/j)
@@ -26,6 +26,7 @@ while (n > 0)
   Coupon_size <- C*r
   Interest_due <- Outstanding_balance*j
   Principle_repaid <- Coupon_size-Interest_due
+  # Calculate variable
   if (n != 0)
   {Payment_size <- Coupon_size}
   else 
